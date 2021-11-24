@@ -1,0 +1,67 @@
+#person:
+#  lastName: 张三
+#  age: 18
+#  boss: false
+#  birth: 1990/12/12
+#  maps: { k1: v1, k2: 12 }
+#  lists:
+#    ‐ lisi
+#    ‐ zhaoliu
+#  dog:
+#    name: 迪迪
+#    age: 5
+
+# 日志配置 http://c.biancheng.net/spring_boot/log-config.html
+# http://c.biancheng.net/spring_boot/log-config.html
+
+#默认配置
+server:
+  port: 8080
+  servlet:
+    context-path: "/app"
+# mybatis
+mybatis:
+  # 指定 mapper.xml 的位置
+  mapper-locations: classpath:/mapper/**/*Mapper.xml
+  # 扫描实体类的位置,在此处指明扫描实体类的包，在 mapper.xml 中就可以不写实体类的全路径名
+  type-aliases-package: com.egsee.demo.model
+# 切换配置
+spring:
+  profiles:
+    active: test
+---
+# java -jar helloworld-0.0.1-SNAPSHOT.jar  --spring.profiles.active=dev
+# 指定虚拟机参数激活指定profile
+# java -Dspring.profiles.active=prod -jar helloworld-0.0.1-SNAPSHOT.jar
+#开发环境
+server:
+  port: 8081
+spring:
+  config:
+    activate:
+      on-profile: dev
+---
+#测试环境
+server:
+  port: 8082
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    username: root
+    password: rootpsd
+    url: jdbc:mysql://127.0.0.1:3306/springboot-demo
+    driver-class-name: com.mysql.cj.jdbc.Driver
+---
+#生产环境
+server:
+  port: 8083
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+#spring:
+#  profiles:
+#    active: dev
